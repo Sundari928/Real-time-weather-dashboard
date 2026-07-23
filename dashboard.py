@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 import requests
 import time
+import os
 
 st.set_page_config(page_title="Real-Time Weather Dashboard", layout="wide")
 
 st.title("🌦️ Real-Time Weather Dashboard")
 st.caption("Live weather data updated every 5 minutes")
 
-API_URL = "http://127.0.0.1:8000/latest"
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000/latest")
 
 # Auto-refresh every 60 seconds
 st_autorefresh_placeholder = st.empty()
