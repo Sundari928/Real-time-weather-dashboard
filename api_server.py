@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import get_latest_data
+from database import get_latest_data, create_table
 
 app = FastAPI()
+
+# Initialize database on startup
+create_table()
 
 # CORS enable karo taaki Streamlit dashboard access kar sake
 app.add_middleware(

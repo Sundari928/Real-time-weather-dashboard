@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 def create_connection():
     conn = sqlite3.connect("weather.db")
@@ -19,6 +20,21 @@ def create_table():
         )
     """)
     conn.commit()
+    
+    # Add sample data if table is empty
+    cursor.execute("SELECT COUNT(*) FROM weather_data")
+    if cursor.fetchone()[0] == 0:
+        sample_data = [
+            ("Mumbai", 32.5, 75, 15, "Partly Cloudy"),
+            ("Delhi", 28.3, 65, 10, "Clear"),
+            ("Bangalore", 25.1, 70, 8, "Rainy"),
+        ]
+        cursor.executemany("""
+            INSERT INTO weather_data (city, temperature, humidity, wind_speed, weather_condition)
+            VALUES (?, ?, ?, ?, ?)
+        """, sample_data)
+        conn.commit()
+    
     conn.close()
     print("Table created successfully!")
 
